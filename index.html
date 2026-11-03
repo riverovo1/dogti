@@ -429,7 +429,7 @@ function copyToClipboard(t){
 }
 
 function share(){
-  const url="https://river2003-cloud.github.io/dogti";
+  const url="https://riverovo1.github.io/dogti";
   const text=resultText+" "+url;
   if(navigator.share){navigator.share({title:"测测你的 dogti",text:text,url:url}).catch(function(){})}
   else{copyToClipboard(text);alert("链接已复制，去粘贴给朋友吧")}
