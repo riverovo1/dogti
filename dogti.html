@@ -69,6 +69,8 @@ body{
 .res-name{font-size:30px;font-weight:800;margin-top:8px;color:var(--ink-1)}
 .res-title{font-size:14px;color:var(--ink-2);margin-top:5px;letter-spacing:.04em}
 .res-cat{width:150px;height:150px;margin:12px auto 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.res-cat.img-mode{width:auto;height:auto;overflow:visible}
+.res-img{display:block;width:240px;max-width:78vw;height:auto;margin:0 auto;border-radius:var(--r-md)}
 .res-desc{margin-top:20px;font-size:14px;line-height:1.95;color:var(--ink-1);text-align:left;white-space:pre-line}
 .tags{margin-top:18px;display:flex;flex-wrap:wrap;gap:8px}
 .tag{font-size:12px;color:var(--ink-2);background:var(--panel-2);padding:6px 12px;border-radius:var(--r-md);letter-spacing:.02em}
@@ -390,7 +392,9 @@ function renderResult(key){
   $("#buddyLine").style.display=b.buddy?"":"none";
   $("#chartBox").style.display=key==="human"?"none":"";
   renderChart();
-  mountDog("resCat",b.emoji);
+  $("#resCat").classList.toggle("img-mode",key==="beagle");
+  if(key==="beagle"){$("#resCat").innerHTML='<img class="res-img" src="beagle-card.png" alt="比格犬身份卡">'}
+  else{mountDog("resCat",b.emoji)}
   show("result");
   try{_hmt.push(["_trackEvent","test","completed",b.n])}catch(e){}
   fetch("https://v1.apizero.cn/api/visits-counter?site=exoticflicker-dogti&name=done&mode=total").then(function(r){return r.text()}).then(function(t){$("#resCount").textContent="小狗大军+1(/▽＼) · 已有 "+t+" 只小狗测过"}).catch(function(){});
