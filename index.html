@@ -477,6 +477,9 @@ $("#shareBtn").onclick=share;
 
 mountDog("coverCat");
 
+// 临时预览：访问 #beagle 直达比格结果页
+if(location.hash==="#beagle"){score={};answers={};renderResult("beagle")}
+
 try{
   fetch("count.json").then(function(r){return r.json()}).then(function(j){
     $("#coverCount").textContent="已测试人数："+(j.count||"—");
