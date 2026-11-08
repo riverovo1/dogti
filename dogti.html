@@ -1519,20 +1519,18 @@ function renderResult(key){
     scene.style.setProperty("--ivory",coat.body);
     scene.style.setProperty("--ear",coat.ear);
     if(key==="pomeranian"){
-      // DogTi pixel Pomeranian: compact cream head, small triangular ears, stepped fur cheeks.
       const pixelDog=scene.querySelector(".dog-feet");
       if(pixelDog){
-        pixelDog.innerHTML=`
-          <path fill="var(--ivory)" d="M180 176h5v-5h6v-4h16v4h6v5h5v6h5v15h-5v7h-8v5h-23v-5h-8v-7h-5v-15h6z"/>
-          <path fill="var(--ear)" d="M183 172h4v-5h4v11h-8z M208 167h4v5h4v6h-8z"/>
-          <path fill="var(--ear)" d="M175 185h7v10h-7z M215 185h7v10h-7z"/>
-          <path fill="var(--ivory)" d="M174 189h-5v5h5v5h4v-10zM223 189h5v5h-5v5h-4v-10z"/>
-          <rect x="187" y="186" width="3" height="3" fill="var(--sky)"/>
-          <rect x="204" y="186" width="3" height="3" fill="var(--sky)"/>
-          <path fill="var(--sky)" d="M197 194h4v3h-4z"/>
-          <path fill="var(--ivory)" d="M217 200h7v-6h6v-7h4v-5h3v10h-3v8h-7v5h-10z"/>`;
+        pixelDog.innerHTML=`<g transform="translate(176 163) scale(2.1)">
+          <path fill="#394351" d="M6 3h4v2h4V3h4v2h2v3h2v11h-2v2H4v-2H2V9h2V7h2z"/>
+          <path fill="#F9F8F0" d="M7 6h3v1h4V6h3v2h2v3h1v8h-2v1H6v-1H4v-8h2V8h1z"/>
+          <path fill="#F1E6E3" d="M7 6h2v3H7z M16 6h2v3h-2z"/>
+          <path fill="#EAE6DE" d="M4 12h2v3H4z M18 12h2v3h-2z"/>
+          <path fill="#292C31" d="M9 13h2v2H9z M15 13h2v2h-2z M12 17h2v1h-2z"/>
+        </g>`;
       }
     }
+    
     scene.classList.toggle("dogti-dark-halo",key==="doberman"||key==="dachshund");
     scene.setAttribute("aria-label",b.n+"：外星飞船捕获失败事件");
   }
@@ -1568,7 +1566,7 @@ const DOGTI_BREED_ICONS = {
   "poodle": "<svg class=\"breed-pixel\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\" shape-rendering=\"crispEdges\" role=\"img\" aria-label=\"poodle像素头像\"><path d=\"M6 5h3V3h7v2h3v3h3v11h-3v3H5v-3H2V8h4z\" fill=\"#e4c09b\" stroke=\"#394351\" stroke-width=\"1.1\" stroke-linejoin=\"miter\"/><path d=\"M2 10h4v7H2z M18 10h4v7h-4z\" fill=\"#af7b63\"/><path d=\"M8 3h9v4H8z\" fill=\"#af7b63\"/><rect x=\"8\" y=\"13\" width=\"2\" height=\"2\" fill=\"#313131\"/><rect x=\"15\" y=\"13\" width=\"2\" height=\"2\" fill=\"#313131\"/><rect x=\"12\" y=\"17\" width=\"2\" height=\"1\" fill=\"#313131\"/></svg>",
   "golden": "<svg class=\"breed-pixel\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\" shape-rendering=\"crispEdges\" role=\"img\" aria-label=\"golden像素头像\"><path d=\"M5 5h15v3h2v10h-3v3H5v-3H2V8h3z\" fill=\"#f1d4a3\" stroke=\"#394351\" stroke-width=\"1.1\" stroke-linejoin=\"miter\"/><path d=\"M2 8h5v10H2z M17 8h5v10h-5z\" fill=\"#d3aa69\"/><path d=\"M9 6h7v3H9z\" fill=\"#d3aa69\"/><rect x=\"8\" y=\"13\" width=\"2\" height=\"2\" fill=\"#313131\"/><rect x=\"15\" y=\"13\" width=\"2\" height=\"2\" fill=\"#313131\"/><rect x=\"12\" y=\"17\" width=\"2\" height=\"1\" fill=\"#313131\"/></svg>",
   "bordercollie": "<svg class=\"breed-pixel\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\" shape-rendering=\"crispEdges\" role=\"img\" aria-label=\"bordercollie像素头像\"><path d=\"M5 3h4v4h7V3h4v7h2v10h-4v2H6v-2H2V10h3z\" fill=\"#e8e9df\" stroke=\"#394351\" stroke-width=\"1.1\" stroke-linejoin=\"miter\"/><path d=\"M4 5h4v10H4z M17 5h4v10h-4z\" fill=\"#4e5768\"/><path d=\"M4 10h5v10H4z M16 9h5v11h-5z\" fill=\"#4e5768\"/><rect x=\"8\" y=\"13\" width=\"2\" height=\"2\" fill=\"#313131\"/><rect x=\"15\" y=\"13\" width=\"2\" height=\"2\" fill=\"#313131\"/><rect x=\"12\" y=\"17\" width=\"2\" height=\"1\" fill=\"#313131\"/></svg>",
-  "pomeranian": "<svg class=\"breed-pixel\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\" shape-rendering=\"crispEdges\" role=\"img\" aria-label=\"pomeranian像素头像\"><path d=\"M7 2h4v3h4V2h4v4h3v5h2v7h-4v4H4v-4H0v-7h3V6h4z\" fill=\"#f1dfba\" stroke=\"#394351\" stroke-width=\"1.1\" stroke-linejoin=\"miter\"/><path d=\"M2 7h4v8H2z M18 7h4v8h-4z\" fill=\"#e9b783\"/><path d=\"M6 4h12v4H6z\" fill=\"#e9b783\"/><rect x=\"8\" y=\"13\" width=\"2\" height=\"2\" fill=\"#313131\"/><rect x=\"15\" y=\"13\" width=\"2\" height=\"2\" fill=\"#313131\"/><rect x=\"12\" y=\"17\" width=\"2\" height=\"1\" fill=\"#313131\"/></svg>",
+  "pomeranian": "<svg class=\"breed-pixel\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\" shape-rendering=\"crispEdges\" role=\"img\" aria-label=\"博美像素头像\"><path fill=\"#394351\" d=\"M6 3h4v2h4V3h4v2h2v3h2v11h-2v2H4v-2H2V9h2V7h2z\"/><path fill=\"#F9F8F0\" d=\"M7 6h3v1h4V6h3v2h2v3h1v8h-2v1H6v-1H4v-8h2V8h1z\"/><path fill=\"#F1E6E3\" d=\"M7 6h2v3H7z M16 6h2v3h-2z\"/><path fill=\"#EAE6DE\" d=\"M4 12h2v3H4z M18 12h2v3h-2z\"/><path fill=\"#292C31\" d=\"M9 13h2v2H9z M15 13h2v2h-2z M12 17h2v1h-2z\"/></svg>",
   "doberman": "<svg class=\"breed-pixel\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\" shape-rendering=\"crispEdges\" role=\"img\" aria-label=\"doberman像素头像\"><path d=\"M4 1h4v8h8V1h4v9h2v9h-3v3H5v-3H2V10h2z\" fill=\"#555d6b\" stroke=\"#394351\" stroke-width=\"1.1\" stroke-linejoin=\"miter\"/><path d=\"M4 2h4v10H4z M16 2h4v10h-4z\" fill=\"#c18c71\"/><path d=\"M7 15h3v4H7z M15 15h3v4h-3z\" fill=\"#c18c71\"/><rect x=\"8\" y=\"13\" width=\"2\" height=\"2\" fill=\"#313131\"/><rect x=\"15\" y=\"13\" width=\"2\" height=\"2\" fill=\"#313131\"/><rect x=\"12\" y=\"17\" width=\"2\" height=\"1\" fill=\"#313131\"/></svg>",
   "dachshund": "<svg class=\"breed-pixel\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\" shape-rendering=\"crispEdges\" role=\"img\" aria-label=\"dachshund像素头像\"><path d=\"M6 7h12v2h4v10h-4v2H6v-2H2V10h4z\" fill=\"#c8936a\" stroke=\"#394351\" stroke-width=\"1.1\" stroke-linejoin=\"miter\"/><path d=\"M2 10h5v9H2z M17 10h5v8h-5z\" fill=\"#8c5a3b\"/><path d=\"M9 6h9v4H9z\" fill=\"#8c5a3b\"/><rect x=\"8\" y=\"13\" width=\"2\" height=\"2\" fill=\"#313131\"/><rect x=\"15\" y=\"13\" width=\"2\" height=\"2\" fill=\"#313131\"/><rect x=\"12\" y=\"17\" width=\"2\" height=\"1\" fill=\"#313131\"/></svg>"
 };
