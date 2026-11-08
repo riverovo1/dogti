@@ -83,7 +83,7 @@ body{
 .bar.hot{background:var(--accent)}
 .bar-label{font-size:10px;color:var(--ink-3);letter-spacing:.02em}
 .pair-box{margin-top:24px;border-top:1px solid var(--border);padding-top:18px}
-.pair-item{display:flex;gap:10px;font-size:14px;line-height:1.7;color:var(--ink-1);margin-bottom:10px}
+.pair-item{display:block;font-size:14px;line-height:1.75;color:var(--ink-1);margin-bottom:14px;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:var(--bg);white-space:normal;overflow-wrap:anywhere} .pair-item .pair-label{display:block;font-weight:700;color:var(--ink-1);margin-bottom:6px} .pair-item .pair-description{display:block;color:var(--ink-2)}
 .pair-item b{color:var(--accent);font-weight:700}
 .actions{margin-top:24px;display:flex;flex-direction:column;gap:10px}
 .action{
@@ -961,7 +961,7 @@ const DOGS = {
   },
   "shiba": {
     "n": "柴犬",
-    "t": "撒手没",
+    "t": "好纳慢慢尼 心急则纳尼",
     "c": "#E0A45C",
     "tags": [
       "冷脸贱",
@@ -1502,8 +1502,9 @@ function renderResult(key){
   $("#resTitle").textContent="—— "+b.t;
   $("#resDesc").textContent=b.d;
   $("#resTags").innerHTML=b.tags.map(function(t){return '<span class="tag">'+t+"</span>"}).join("");
-  $("#pairLine").textContent=b.pair;
-  $("#buddyLine").textContent=b.buddy;
+  const makeMatchLine=(el,raw,prefix)=>{const val=String(raw||'');const m=val.match(/^([^：:]+)[：:]\s*(.*)$/s);el.replaceChildren();const label=document.createElement('span');label.className='pair-label';label.textContent=m?m[1]:prefix;const body=document.createElement('span');body.className='pair-description';body.textContent=m?m[2]:val;el.append(label,body);};
+  makeMatchLine($("#pairLine"),b.pair,'最佳CP');
+  makeMatchLine($("#buddyLine"),b.buddy,'最佳好友');
   $("#buddyLine").style.display=b.buddy?"":"none";
   $("#chartBox").style.display="";
   renderChart();
