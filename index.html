@@ -880,7 +880,7 @@ button:focus-visible{outline-color:var(--blue)}
         <label class="board-label" for="boardName">昵称</label>
         <input id="boardName" class="board-input" maxlength="18" placeholder="匿名小狗" autocomplete="nickname" />
         <label class="board-label" for="boardBreed">小狗身份（可选）</label>
-        <select id="boardBreed" class="board-input"><option value="">还没有测出来</option><option>马尔济斯</option><option>比格犬</option><option>哈士奇</option><option>柴犬</option><option>泰迪</option><option>金毛</option><option>边牧</option><option>柯基</option><option>杜宾</option><option>腊肠</option></select>
+        <select id="boardBreed" class="board-input"><option value="">还没有测出来</option><option>马尔济斯</option><option>比格犬</option><option>哈士奇</option><option>柴犬</option><option>泰迪</option><option>金毛</option><option>边牧</option><option>博美</option><option>杜宾</option><option>腊肠</option></select>
         <label class="board-label" for="boardText" id="boardFormTitle">留言</label>
         <textarea id="boardText" class="board-input board-area" maxlength="300" placeholder="写点什么吧……(｡･ω･｡)" rows="4"></textarea>
         <div id="boardReplyTarget" class="board-reply-target" hidden></div>
@@ -941,7 +941,7 @@ const DOGS = {
       "顶级摆烂"
     ],
     "d": "想像蝉一样爽睡17年 醒来就对四周大叫 然后毫无原因地挂掉\n文艺病彻底被生活治好了 现在不管遇到什么困难都只能像一个绝望老实的农村人一样 呆愣的站在原地 半天只能蹦出一句“哎哟 为啥啊”",
-    "pair": "最佳CP：柯基（吵吵闹闹，偏偏舍不得分开）",
+    "pair": "最佳CP：博美（吵吵闹闹，偏偏舍不得分开）",
     "buddy": "最佳好友：腊肠（他讲美联储，你问赚了多少）",
     "share": "我测出来是比格大魔王，你是哪只小狗？"
   },
@@ -997,7 +997,7 @@ const DOGS = {
     ],
     "d": "其实我远比你想象中的更需要你，因为我真的很在意你。你总能左右我的情绪，我喜欢每天早上醒来看到你的消息，我喜欢你看到好看的视频时与我分享的样子，我喜欢你大事小事都和我说，让我感觉到被需要。无论相隔多远，都能让我感受到内心的炽热。我想和你一直走下去，期待你的每一天，更期待和你一起做更多有意义的事。",
     "pair": "最佳CP：马尔济斯（被坚定需要，是你的心软开关）",
-    "buddy": "最佳好友：柯基（嘴上喊累，陪ta疯到天亮）",
+    "buddy": "最佳好友：博美（嘴上喊累，陪ta疯到天亮）",
     "share": "我测出来是金毛忠犬攻，你是哪只小狗？"
   },
   "bordercollie": {
@@ -1014,8 +1014,8 @@ const DOGS = {
     "buddy": "最佳好友：马尔济斯（ta讲八卦，你做思维导图）",
     "share": "我测出来是边牧学霸，你是哪只小狗？"
   },
-  "corgi": {
-    "n": "柯基",
+  "pomeranian": {
+    "n": "博美",
     "t": "人类用尽辞藻描述真心，而我只会眨巴黑漆漆的眼睛。",
     "c": "#D9B98A",
     "tags": [
@@ -1025,7 +1025,7 @@ const DOGS = {
     "d": "「如果说能开心的话，当笨蛋也没关系」\n我们应该坐在一起发呆 发很久很久的呆 然后我说 人类好渺小啊 你说 但是爱很伟大呀",
     "pair": "最佳CP：比格犬（一个嘴硬，一个死缠烂打）",
     "buddy": "最佳好友：哈士奇（俩人凑不出一个正常主意）",
-    "share": "我测出来是柯基快乐小狗，你是哪只小狗？"
+    "share": "我测出来是博美快乐小狗，你是哪只小狗？"
   },
   "doberman": {
     "n": "杜宾",
@@ -1085,7 +1085,7 @@ const DOGTI_INCIDENTS = {
     "time": "01:11",
     "result": "任务取消。原因：你发现了捕获程序的三个逻辑漏洞。"
   },
-  "corgi": {
+  "pomeranian": {
     "time": "00:24",
     "result": "捕获失败。原因：你以为是集体郊游，跑去通知了整条街的小狗。"
   },
@@ -1128,7 +1128,7 @@ const DOGTI_COATS = {
     "body": "#e1e6ea",
     "ear": "#4b5567"
   },
-  "corgi": {
+  "pomeranian": {
     "body": "#f4e1bf",
     "ear": "#d69e66"
   },
@@ -1358,7 +1358,7 @@ window.DOGTI_QUIZ_CONFIG = window.DOGTI_QUIZ_CONFIG || {apiBase: ''};
 // GitHub Pages temporary compatibility fallback: the authoritative private Worker can replace this once deployed.
 // Encoded integer indices are not encryption. Production browsers can always inspect client-side logic.
 const DOGTI_FALLBACK_PACK='46356012476537024038312606420571617343295348562750617954185902948189089297189378';
-const DOGTI_FALLBACK_BREEDS=['maltese','beagle','husky','shiba','poodle','golden','bordercollie','corgi','doberman','dachshund'];
+const DOGTI_FALLBACK_BREEDS=['maltese','beagle','husky','shiba','poodle','golden','bordercollie','pomeranian','doberman','dachshund'];
 function dogtiLocalScore(v){
   if(!Array.isArray(v)||v.length!==20||!v.every(a=>Number.isInteger(a)&&a>=0&&a<4))throw new Error('请完成20道题');
   const count=new Array(10).fill(0);
@@ -1518,6 +1518,21 @@ function renderResult(key){
   if(scene){
     scene.style.setProperty("--ivory",coat.body);
     scene.style.setProperty("--ear",coat.ear);
+    if(key==="pomeranian"){
+      // DogTi pixel Pomeranian: compact cream head, small triangular ears, stepped fur cheeks.
+      const pixelDog=scene.querySelector(".dog-feet");
+      if(pixelDog){
+        pixelDog.innerHTML=`
+          <path fill="var(--ivory)" d="M180 176h5v-5h6v-4h16v4h6v5h5v6h5v15h-5v7h-8v5h-23v-5h-8v-7h-5v-15h6z"/>
+          <path fill="var(--ear)" d="M183 172h4v-5h4v11h-8z M208 167h4v5h4v6h-8z"/>
+          <path fill="var(--ear)" d="M175 185h7v10h-7z M215 185h7v10h-7z"/>
+          <path fill="var(--ivory)" d="M174 189h-5v5h5v5h4v-10zM223 189h5v5h-5v5h-4v-10z"/>
+          <rect x="187" y="186" width="3" height="3" fill="var(--sky)"/>
+          <rect x="204" y="186" width="3" height="3" fill="var(--sky)"/>
+          <path fill="var(--sky)" d="M197 194h4v3h-4z"/>
+          <path fill="var(--ivory)" d="M217 200h7v-6h6v-7h4v-5h3v10h-3v8h-7v5h-10z"/>`;
+      }
+    }
     scene.classList.toggle("dogti-dark-halo",key==="doberman"||key==="dachshund");
     scene.setAttribute("aria-label",b.n+"：外星飞船捕获失败事件");
   }
@@ -1553,7 +1568,7 @@ const DOGTI_BREED_ICONS = {
   "poodle": "<svg class=\"breed-pixel\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\" shape-rendering=\"crispEdges\" role=\"img\" aria-label=\"poodle像素头像\"><path d=\"M6 5h3V3h7v2h3v3h3v11h-3v3H5v-3H2V8h4z\" fill=\"#e4c09b\" stroke=\"#394351\" stroke-width=\"1.1\" stroke-linejoin=\"miter\"/><path d=\"M2 10h4v7H2z M18 10h4v7h-4z\" fill=\"#af7b63\"/><path d=\"M8 3h9v4H8z\" fill=\"#af7b63\"/><rect x=\"8\" y=\"13\" width=\"2\" height=\"2\" fill=\"#313131\"/><rect x=\"15\" y=\"13\" width=\"2\" height=\"2\" fill=\"#313131\"/><rect x=\"12\" y=\"17\" width=\"2\" height=\"1\" fill=\"#313131\"/></svg>",
   "golden": "<svg class=\"breed-pixel\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\" shape-rendering=\"crispEdges\" role=\"img\" aria-label=\"golden像素头像\"><path d=\"M5 5h15v3h2v10h-3v3H5v-3H2V8h3z\" fill=\"#f1d4a3\" stroke=\"#394351\" stroke-width=\"1.1\" stroke-linejoin=\"miter\"/><path d=\"M2 8h5v10H2z M17 8h5v10h-5z\" fill=\"#d3aa69\"/><path d=\"M9 6h7v3H9z\" fill=\"#d3aa69\"/><rect x=\"8\" y=\"13\" width=\"2\" height=\"2\" fill=\"#313131\"/><rect x=\"15\" y=\"13\" width=\"2\" height=\"2\" fill=\"#313131\"/><rect x=\"12\" y=\"17\" width=\"2\" height=\"1\" fill=\"#313131\"/></svg>",
   "bordercollie": "<svg class=\"breed-pixel\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\" shape-rendering=\"crispEdges\" role=\"img\" aria-label=\"bordercollie像素头像\"><path d=\"M5 3h4v4h7V3h4v7h2v10h-4v2H6v-2H2V10h3z\" fill=\"#e8e9df\" stroke=\"#394351\" stroke-width=\"1.1\" stroke-linejoin=\"miter\"/><path d=\"M4 5h4v10H4z M17 5h4v10h-4z\" fill=\"#4e5768\"/><path d=\"M4 10h5v10H4z M16 9h5v11h-5z\" fill=\"#4e5768\"/><rect x=\"8\" y=\"13\" width=\"2\" height=\"2\" fill=\"#313131\"/><rect x=\"15\" y=\"13\" width=\"2\" height=\"2\" fill=\"#313131\"/><rect x=\"12\" y=\"17\" width=\"2\" height=\"1\" fill=\"#313131\"/></svg>",
-  "corgi": "<svg class=\"breed-pixel\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\" shape-rendering=\"crispEdges\" role=\"img\" aria-label=\"corgi像素头像\"><path d=\"M3 1h5v9h8V1h5v11h2v8h-3v2H4v-2H1v-8h2z\" fill=\"#f3e6c6\" stroke=\"#394351\" stroke-width=\"1.1\" stroke-linejoin=\"miter\"/><path d=\"M3 2h4v12H3z M17 2h4v12h-4z\" fill=\"#d69e66\"/><path d=\"M8 7h8v5H8z\" fill=\"#d69e66\"/><rect x=\"8\" y=\"13\" width=\"2\" height=\"2\" fill=\"#313131\"/><rect x=\"15\" y=\"13\" width=\"2\" height=\"2\" fill=\"#313131\"/><rect x=\"12\" y=\"17\" width=\"2\" height=\"1\" fill=\"#313131\"/></svg>",
+  "pomeranian": "<svg class=\"breed-pixel\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\" shape-rendering=\"crispEdges\" role=\"img\" aria-label=\"pomeranian像素头像\"><path d=\"M7 2h4v3h4V2h4v4h3v5h2v7h-4v4H4v-4H0v-7h3V6h4z\" fill=\"#f1dfba\" stroke=\"#394351\" stroke-width=\"1.1\" stroke-linejoin=\"miter\"/><path d=\"M2 7h4v8H2z M18 7h4v8h-4z\" fill=\"#e9b783\"/><path d=\"M6 4h12v4H6z\" fill=\"#e9b783\"/><rect x=\"8\" y=\"13\" width=\"2\" height=\"2\" fill=\"#313131\"/><rect x=\"15\" y=\"13\" width=\"2\" height=\"2\" fill=\"#313131\"/><rect x=\"12\" y=\"17\" width=\"2\" height=\"1\" fill=\"#313131\"/></svg>",
   "doberman": "<svg class=\"breed-pixel\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\" shape-rendering=\"crispEdges\" role=\"img\" aria-label=\"doberman像素头像\"><path d=\"M4 1h4v8h8V1h4v9h2v9h-3v3H5v-3H2V10h2z\" fill=\"#555d6b\" stroke=\"#394351\" stroke-width=\"1.1\" stroke-linejoin=\"miter\"/><path d=\"M4 2h4v10H4z M16 2h4v10h-4z\" fill=\"#c18c71\"/><path d=\"M7 15h3v4H7z M15 15h3v4h-3z\" fill=\"#c18c71\"/><rect x=\"8\" y=\"13\" width=\"2\" height=\"2\" fill=\"#313131\"/><rect x=\"15\" y=\"13\" width=\"2\" height=\"2\" fill=\"#313131\"/><rect x=\"12\" y=\"17\" width=\"2\" height=\"1\" fill=\"#313131\"/></svg>",
   "dachshund": "<svg class=\"breed-pixel\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\" shape-rendering=\"crispEdges\" role=\"img\" aria-label=\"dachshund像素头像\"><path d=\"M6 7h12v2h4v10h-4v2H6v-2H2V10h4z\" fill=\"#c8936a\" stroke=\"#394351\" stroke-width=\"1.1\" stroke-linejoin=\"miter\"/><path d=\"M2 10h5v9H2z M17 10h5v8h-5z\" fill=\"#8c5a3b\"/><path d=\"M9 6h9v4H9z\" fill=\"#8c5a3b\"/><rect x=\"8\" y=\"13\" width=\"2\" height=\"2\" fill=\"#313131\"/><rect x=\"15\" y=\"13\" width=\"2\" height=\"2\" fill=\"#313131\"/><rect x=\"12\" y=\"17\" width=\"2\" height=\"1\" fill=\"#313131\"/></svg>"
 };
@@ -1604,7 +1619,7 @@ function share(){
 $("#startBtn").onclick=function(){idx=0;answers={};chartValues=Array(8).fill(0);picked=null;renderQ();show("quiz")};
 $("#prevBtn").onclick=function(){if(idx===0)return;const previousIndex=idx-1;delete answers[previousIndex];idx--;renderQ()};
 $("#againBtn").onclick=function(){idx=0;answers={};chartValues=Array(8).fill(0);picked=null;renderQ();show("quiz")};
-$("#galleryBtn").querySelector(".gallery-mini-icons").innerHTML=breedIcon("beagle")+breedIcon("corgi")+breedIcon("doberman");
+$("#galleryBtn").querySelector(".gallery-mini-icons").innerHTML=breedIcon("beagle")+breedIcon("pomeranian")+breedIcon("doberman");
   $("#galleryBtn").onclick=function(){renderGallery();show("gallery")};
 $("#galleryBack").onclick=function(){show("result")};
 $("#voteBtn").onclick=function(){show("board");dogtiBoardOpen()};
@@ -1694,8 +1709,8 @@ window.DOGTI_BOARD_CONFIG = window.DOGTI_BOARD_CONFIG || {apiBase:'',siteKey:''}
   const q=id=>document.getElementById(id), cfg=window.DOGTI_BOARD_CONFIG;
   const live=Boolean(cfg.apiBase && cfg.siteKey);
   const sample=[
-    {id:'demo-01',nickname:'一只边牧',breed:'边牧',content:'这个测试是不是偷偷看了我的聊天记录……',created_at:'演示',likes:12,liked:false,replies:[{id:'reply-01',nickname:'匿名柯基',content:'说真的我也是！(๑•̀ㅂ•́)و',created_at:'演示'}]},
-    {id:'demo-02',nickname:'匿名柯基',breed:'柯基',content:'我测出来是柯基，为什么说我恋爱脑啊！！T_T',created_at:'演示',likes:8,liked:false,replies:[]}
+    {id:'demo-01',nickname:'一只边牧',breed:'边牧',content:'这个测试是不是偷偷看了我的聊天记录……',created_at:'演示',likes:12,liked:false,replies:[{id:'reply-01',nickname:'匿名博美',content:'说真的我也是！(๑•̀ㅂ•́)و',created_at:'演示'}]},
+    {id:'demo-02',nickname:'匿名博美',breed:'博美',content:'我测出来是博美，为什么说我恋爱脑啊！！T_T',created_at:'演示',likes:8,liked:false,replies:[]}
   ];
   let messages=sample,replyTo=null,busy=false,opened=false,token='';
   const text=(el,s)=>{el.textContent=s==null?'':String(s);return el};
