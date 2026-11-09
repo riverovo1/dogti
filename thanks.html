@@ -121,6 +121,32 @@
     .donor-row:last-child{border-bottom:0}
     .donor-name{min-width:0;overflow-wrap:anywhere;font-size:13px;font-weight:600}
     .donor-meta{flex:none;color:var(--muted);font:10px/1.5 "Courier New",monospace;text-align:right}
+
+    .special-wall,.directory-wall{margin-top:13px}
+    .archive-subhead{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;margin:0 0 11px}
+    .archive-subhead h3{margin:4px 0 0;font-size:16px;line-height:1.4}
+    .archive-subhead>span{color:var(--muted);font:10px/1.4 "Courier New",monospace;text-align:right}
+    .special-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+    .special-card{position:relative;display:flex;align-items:center;gap:8px;min-width:0;padding:11px 9px;border:1.5px solid var(--blue);background:var(--card);box-shadow:3px 3px 0 var(--green);transition:transform .16s steps(2,end),box-shadow .16s steps(2,end)}
+    .special-card:hover{transform:translateY(-2px);box-shadow:3px 5px 0 var(--green)}
+    .special-copy{display:flex;flex:1;min-width:0;flex-direction:column;gap:3px}
+    .special-copy strong,.archive-card-copy strong{font-size:12px;line-height:1.45;overflow-wrap:anywhere}
+    .special-copy small,.archive-card-copy small{color:var(--muted);font:9px/1.4 "Courier New",monospace}
+    .pixel-star{position:absolute;right:6px;top:4px;color:var(--orange);font-size:11px;animation:starPulse 2.4s ease-in-out infinite}
+    @keyframes starPulse{0%,100%{opacity:.45;transform:scale(.85)}50%{opacity:1;transform:scale(1.12)}}
+    .archive-controls{display:grid;grid-template-columns:minmax(0,1fr) 118px 118px;gap:7px;margin-bottom:10px}
+    .archive-controls input,.archive-controls select{width:100%;min-width:0;min-height:40px;padding:8px 9px;border:1px solid var(--line);border-radius:0;background:#F7F4E9;color:var(--ink);font-size:11px}
+    .archive-result-line{display:flex;justify-content:space-between;gap:8px;margin:0 0 9px;color:var(--muted);font:10px/1.5 "Courier New",monospace}
+    .archive-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+    .archive-card{display:flex;align-items:center;gap:7px;min-width:0;min-height:43px;padding:8px;border:1px solid #C8C6B8;background:#F7F4E9;transition:transform .16s steps(2,end),border-color .16s ease}
+    .archive-card:hover{transform:translateY(-1px);border-color:var(--blue)}
+    .mini-paw{flex:none;color:var(--green);font-size:13px}
+    .archive-card-copy{display:flex;flex:1;min-width:0;flex-direction:column;gap:2px}
+    .archive-pagination{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:12px}
+    .archive-pagination button{min-height:34px;padding:7px 10px;border:1px solid var(--blue);background:var(--paper);color:var(--blue);font-size:10px}
+    .archive-pagination button:disabled{opacity:.35;cursor:not-allowed}
+    .archive-pagination span{color:var(--muted);font:10px/1.4 "Courier New",monospace}
+    .archive-empty{grid-column:1/-1}
     .empty-state{
       padding:23px 14px;border:1.5px dashed var(--line);background:#E8E7DB;
       text-align:center;color:var(--blue);font-size:12px;line-height:1.9;
@@ -138,6 +164,9 @@
       .project-tab{padding:9px 6px}
       .qr-frame{width:184px}
       .donor-row{align-items:flex-start}
+      .archive-controls{grid-template-columns:minmax(0,1fr) 105px}
+      .archive-controls input{grid-column:1/-1}
+      .special-card{padding:9px 7px;gap:6px}
     }
     @media(prefers-reduced-motion:reduce){
       html{scroll-behavior:auto}
@@ -265,7 +294,7 @@
       <h2>支持者档案</h2>
       <div class="updated" id="updatedLabel">名单加载中…</div>
     </div>
-    <p class="archive-note">档位按「单笔最高赞赏金额」划分；累计金额与赞赏次数单独记录。</p>
+    <p class="archive-note">鸣谢位根据支持记录自动归档。这里展示昵称与感谢身份，不公开任何赞赏金额。</p>
     <div class="stats hidden" id="stats" aria-live="polite"></div>
     <div id="donorList" aria-live="polite">
       <div class="empty-state"><strong>正在接收补给信号……</strong>请稍等片刻。</div>
@@ -311,10 +340,10 @@
   };
   const TIER_ORDER=["ssr","sr","r","n"];
   const TIER_META={
-    ssr:{grade:"SSR",label:"股东",min:100},
-    sr:{grade:"SR",label:"大股东",min:50},
-    r:{grade:"R",label:"支持者",min:10},
-    n:{grade:"N",label:"小可爱",min:0}
+    ssr:{grade:"SSR",label:"股东"},
+    sr:{grade:"SR",label:"大股东"},
+    r:{grade:"R",label:"支持者"},
+    n:{grade:"N",label:"小可爱"}
   };
 
   const params=new URLSearchParams(location.search);
@@ -341,18 +370,32 @@
   function renderStats(list){
     const stats=$("stats");
     if(!Array.isArray(list)||!list.length){stats.classList.add("hidden");stats.innerHTML="";return;}
-    const total=list.reduce((sum,item)=>sum+(Number(item.total)||0),0);
-    const donations=list.reduce((sum,item)=>sum+(Number(item.count)||0),0);
+    const records=list.reduce((sum,item)=>sum+(Number(item.count)||1),0);
+    const anonymous=list.filter(item=>item.anonymous).length;
     stats.innerHTML=
-      '<div class="stat"><strong>'+list.length+'</strong><span>支持者</span></div>'+
-      '<div class="stat"><strong>'+donations+'</strong><span>赞赏笔数</span></div>'+
-      '<div class="stat"><strong>¥'+fmt(total)+'</strong><span>累计支持</span></div>';
+      '<div class="stat"><strong>'+list.length.toLocaleString("zh-CN")+'</strong><span>鸣谢档案</span></div>'+
+      '<div class="stat"><strong>'+records.toLocaleString("zh-CN")+'</strong><span>赞赏记录</span></div>'+
+      '<div class="stat"><strong>'+anonymous.toLocaleString("zh-CN")+'</strong><span>匿名小猫</span></div>';
     stats.classList.remove("hidden");
+  }
+
+  function normalizeSponsors(raw){
+    if(Array.isArray(raw)){
+      return raw.map(item=>Array.isArray(item)
+        ? {name:item[0],tier:item[1],count:item[2],anonymous:!!item[3]}
+        : item);
+    }
+    if(raw&&typeof raw==="object"){
+      return TIER_ORDER.flatMap(tier=>(Array.isArray(raw[tier])?raw[tier]:[]).map(item=>({
+        name:item[0],tier,count:item[1],anonymous:!!item[2]
+      })));
+    }
+    return [];
   }
 
   function renderSponsors(data){
     const root=$("donorList");
-    const list=Array.isArray(data.list)?data.list:[];
+    const list=normalizeSponsors(data.list);
     $("updatedLabel").textContent=data.updated?"UPDATED / "+data.updated:"";
     if(data.placeholder===true){
       $("stats").classList.add("hidden");
@@ -364,28 +407,89 @@
       root.innerHTML='<div class="empty-state"><strong>第一份补给信号正在路上。</strong>感谢你来到这里。</div>';
       return;
     }
-    renderStats(list);
-    let html="";
-    for(const key of TIER_ORDER){
-      const meta=TIER_META[key];
-      const members=list.filter(item=>item.tier===key);
-      if(!members.length) continue;
-      html+='<section class="tier-block" aria-label="'+meta.grade+' '+meta.label+'">';
-      html+='<div class="tier-head"><div class="tier-name"><span class="tier-badge" data-tier="'+key+'">'+meta.grade+'</span><span>'+meta.label+'</span></div>';
-      const threshold=key==="ssr"?"单笔 ¥100+":key==="sr"?"单笔 ¥50–99.99":key==="r"?"单笔 ¥10–49.99":"单笔低于 ¥10";
-      html+='<span class="tier-count">'+threshold+' · '+members.length+' PERSON'+(members.length===1?"":"S")+'</span></div><div class="donor-list">';
-      members.forEach(item=>{
-        const name=escapeHTML(item.name||"匿名支持者");
-        const count=Math.max(0,Number(item.count)||0);
-        const total=Number(item.total)||0;
-        const metaText=(count?("累计 ¥"+fmt(total)+" · "+count+" 次"):"感谢支持");
-        html+='<div class="donor-row"><span class="donor-name">'+name+'</span><span class="donor-meta">'+escapeHTML(metaText)+'</span></div>';
-      });
-      html+="</div></section>";
-    }
-    root.innerHTML=html||'<div class="empty-state"><strong>名单正在整理中。</strong>感谢每一份支持。</div>';
-  }
 
+    renderStats(list);
+    const special=list.filter(item=>["ssr","sr","r"].includes(item.tier));
+    const specialHTML=special.length
+      ? special.map(item=>{
+          const tier=item.tier||"n";
+          const meta=TIER_META[tier]||TIER_META.n;
+          return '<article class="special-card">'+
+            '<span class="tier-badge" data-tier="'+tier+'">'+meta.grade+'</span>'+
+            '<div class="special-copy"><strong>'+escapeHTML(item.name||"匿名小猫")+'</strong>'+
+            '<small>'+(item.anonymous?"匿名小猫":meta.label)+'</small></div>'+
+            '<span class="pixel-star" aria-hidden="true">✦</span></article>';
+        }).join("")
+      : '<div class="empty-state">特别鸣谢位正在等待小猫入住。</div>';
+
+    root.innerHTML=
+      '<section class="special-wall">'+
+        '<div class="archive-subhead"><div><div class="section-kicker">SPECIAL THANKS</div><h3>特别鸣谢</h3></div><span>'+special.length+' 位小猫</span></div>'+
+        '<div class="special-grid">'+specialHTML+'</div>'+
+      '</section>'+
+      '<section class="directory-wall">'+
+        '<div class="archive-subhead"><div><div class="section-kicker">LITTLE CAT DIRECTORY</div><h3>小猫名录</h3></div><span>30 / PAGE</span></div>'+
+        '<div class="archive-controls">'+
+          '<input id="archiveSearch" type="search" placeholder="搜索小猫昵称…" aria-label="搜索小猫昵称" autocomplete="off">'+
+          '<select id="archiveType" aria-label="选择名单类型">'+
+            '<option value="all">全部档案</option><option value="named">留下昵称</option>'+
+            '<option value="anonymous">匿名小猫</option><option value="special">特别鸣谢</option>'+
+          '</select>'+
+          '<select id="archiveTier" aria-label="按等级筛选">'+
+            '<option value="all">全部等级</option><option value="ssr">SSR · 股东</option>'+
+            '<option value="sr">SR · 大股东</option><option value="r">R · 支持者</option><option value="n">N · 小可爱</option>'+
+          '</select>'+
+        '</div>'+
+        '<div class="archive-result-line"><span id="archiveResultCount"></span><span id="archiveRange"></span></div>'+
+        '<div id="archiveResults" class="archive-grid" aria-live="polite"></div>'+
+        '<div class="archive-pagination"><button type="button" id="archivePrev" disabled>← 上一页</button>'+
+          '<span id="archivePageStatus">1 / 1</span><button type="button" id="archiveNext" disabled>下一页 →</button></div>'+
+      '</section>';
+
+    let page=1;
+    const pageSize=30;
+    const search=$("archiveSearch");
+    const type=$("archiveType");
+    const tier=$("archiveTier");
+
+    function drawPage(){
+      const query=search.value.trim().toLocaleLowerCase();
+      const typeValue=type.value;
+      const tierValue=tier.value;
+      const filtered=list.filter(item=>{
+        const isSpecial=["ssr","sr","r"].includes(item.tier);
+        if(typeValue==="named"&&item.anonymous) return false;
+        if(typeValue==="anonymous"&&!item.anonymous) return false;
+        if(typeValue==="special"&&!isSpecial) return false;
+        if(tierValue!=="all"&&item.tier!==tierValue) return false;
+        if(query&&!String(item.name||"").toLocaleLowerCase().includes(query)) return false;
+        return true;
+      });
+      const pages=Math.max(1,Math.ceil(filtered.length/pageSize));
+      page=Math.min(page,pages);
+      const start=(page-1)*pageSize;
+      const shown=filtered.slice(start,start+pageSize);
+      $("archiveResultCount").textContent="找到 "+filtered.length.toLocaleString("zh-CN")+" 只小猫";
+      $("archiveRange").textContent=filtered.length?(start+1)+"–"+Math.min(start+pageSize,filtered.length):"";
+      $("archiveResults").innerHTML=shown.length?shown.map(item=>{
+        const meta=TIER_META[item.tier]||TIER_META.n;
+        return '<article class="archive-card" data-tier="'+item.tier+'">'+
+          '<span class="mini-paw" aria-hidden="true">✦</span>'+
+          '<div class="archive-card-copy"><strong>'+escapeHTML(item.name||"匿名小猫")+'</strong>'+
+          '<small>'+(item.anonymous?"匿名小猫":meta.grade+" · "+meta.label)+'</small></div></article>';
+      }).join(""):'<div class="empty-state archive-empty">没有找到匹配的小猫。</div>';
+      $("archivePageStatus").textContent=page+" / "+pages;
+      $("archivePrev").disabled=page<=1;
+      $("archiveNext").disabled=page>=pages;
+    }
+
+    search.addEventListener("input",()=>{page=1;drawPage();});
+    type.addEventListener("change",()=>{page=1;drawPage();});
+    tier.addEventListener("change",()=>{page=1;drawPage();});
+    $("archivePrev").addEventListener("click",()=>{if(page>1){page--;drawPage();}});
+    $("archiveNext").addEventListener("click",()=>{page++;drawPage();});
+    drawPage();
+  }
   async function loadSponsors(project){
     const root=$("donorList");
     $("updatedLabel").textContent="LOADING…";
