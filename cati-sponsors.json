@@ -1,0 +1,33 @@
+{
+  "project": "cati",
+  "updated": "2026-11-08",
+  "placeholder": true,
+  "tiers": [
+    {
+      "key": "ssr",
+      "label": "SSR · 股东",
+      "min": 100,
+      "color": "#E8B04B"
+    },
+    {
+      "key": "sr",
+      "label": "SR · 大股东",
+      "min": 50,
+      "color": "#C08A5A"
+    },
+    {
+      "key": "r",
+      "label": "R · 支持者",
+      "min": 10,
+      "color": "#B9B5AB"
+    },
+    {
+      "key": "n",
+      "label": "N · 小可爱",
+      "min": 0,
+      "color": "#D8D5CC"
+    }
+  ],
+  "stats": null,
+  "list": []
+}

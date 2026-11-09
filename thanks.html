@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#F2EFDF">
+  <meta name="description" content="CATI 与 DogTi 共用的作者鸣谢中心。两个项目分别记录每一份支持。">
+  <title>作者鸣谢中心 · 夏泉</title>
+  <style>
+    :root{
+      color-scheme:light;
+      --page:#E7E3D7;
+      --paper:#F2EFDF;
+      --card:#FFFBEF;
+      --ink:#343943;
+      --blue:#4E5A6D;
+      --green:#89BAAB;
+      --orange:#E8B975;
+      --muted:#65717D;
+      --line:#789298;
+      --ssr:#E8B04B;
+      --sr:#C08A5A;
+      --r:#B9B5AB;
+      --n:#D8D5CC;
+    }
+    *{box-sizing:border-box}
+    html{background:var(--page);scroll-behavior:smooth}
+    body{
+      margin:0;background:var(--page);color:var(--ink);
+      font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+      -webkit-font-smoothing:antialiased;
+    }
+    button,a{font:inherit}
+    a{color:inherit}
+    .shell{
+      width:min(100%,560px);min-height:100dvh;margin:0 auto;
+      padding:22px 22px 38px;background:var(--paper);
+    }
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:15px;border-bottom:2px solid var(--green)}
+    .back-link{
+      display:inline-flex;align-items:center;gap:6px;text-decoration:none;
+      color:var(--blue);font:12px/1.4 "Courier New",monospace;
+      padding:6px 0;min-height:32px;
+    }
+    .serial{color:var(--blue);font:10px/1.4 "Courier New",monospace;letter-spacing:.07em;text-align:right}
+    .hero{padding:26px 0 22px}
+    .kicker,.section-kicker{
+      color:var(--blue);font:10px/1.5 "Courier New",monospace;
+      letter-spacing:.13em;text-transform:uppercase;
+    }
+    h1{font-size:30px;line-height:1.28;letter-spacing:.01em;margin:12px 0 8px;font-weight:750}
+    .hero-copy{margin:0;color:var(--blue);font-size:13px;line-height:1.85}
+    .pixel-scene{
+      display:block;width:100%;height:auto;margin:20px 0 0;
+      border:1px solid var(--line);background:#E8E7DB;
+      box-shadow:4px 4px 0 var(--green);image-rendering:pixelated;
+    }
+    .scene-caption{
+      display:flex;justify-content:space-between;gap:10px;margin-top:10px;
+      color:var(--blue);font:9px/1.5 "Courier New",monospace;letter-spacing:.06em;
+    }
+    .section{margin-top:27px}
+    .section-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 13px}
+    .project-tabs{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+    .project-tab{
+      min-height:48px;padding:10px 8px;border:2px solid var(--blue);
+      background:var(--card);color:var(--ink);text-align:left;
+      box-shadow:3px 3px 0 var(--green);cursor:pointer;
+      transition:transform .12s steps(2,end),box-shadow .12s steps(2,end);
+    }
+    .project-tab strong{display:block;font-size:13px;letter-spacing:.03em}
+    .project-tab small{display:block;margin-top:3px;color:var(--muted);font:10px/1.3 "Courier New",monospace}
+    .project-tab[aria-selected="true"]{background:var(--orange);box-shadow:3px 3px 0 var(--blue)}
+    .project-tab:active{transform:translate(3px,3px);box-shadow:none}
+    .project-tab:focus-visible,.back-link:focus-visible,.thanks-link:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
+    .project-card{
+      margin-top:16px;padding:17px 16px 15px;border:2px solid var(--blue);
+      background:var(--card);box-shadow:4px 4px 0 var(--green);
+    }
+    .project-code{color:var(--blue);font:10px/1.5 "Courier New",monospace;letter-spacing:.12em}
+    h2{font-size:20px;line-height:1.4;margin:7px 0 6px}
+    .project-desc{margin:0;font-size:13px;line-height:1.8;color:#4E5A6D}
+    .project-scope{
+      margin-top:13px;padding:8px 9px;border:1px dashed var(--green);
+      background:#F2EFDF;color:var(--blue);font:10px/1.65 "Courier New",monospace;
+    }
+    .donation-card{
+      padding:17px 16px 15px;border:2px solid var(--blue);
+      background:var(--card);box-shadow:4px 4px 0 var(--green);text-align:center;
+    }
+    .donation-top{display:flex;align-items:center;justify-content:space-between;gap:8px;text-align:left}
+    .donation-title{font-size:15px;font-weight:700}
+    .donation-code{font:9px/1.4 "Courier New",monospace;color:var(--blue);letter-spacing:.06em}
+    .qr-frame{
+      width:196px;max-width:100%;margin:17px auto 10px;padding:8px;
+      background:#fff;border:2px solid var(--blue);
+    }
+    .qr-frame img{display:block;width:100%;height:auto;aspect-ratio:1;object-fit:contain}
+    .qr-fallback{display:none;min-height:160px;align-items:center;justify-content:center;padding:12px;color:var(--muted);font-size:12px;line-height:1.7}
+    .qr-hint{margin:0;color:var(--blue);font-size:12px;font-weight:600}
+    .donation-note{margin:9px 0 0;color:var(--muted);font-size:11px;line-height:1.7}
+    .archive-head{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;margin-bottom:13px}
+    .archive-head h2{margin:0}
+    .updated{color:var(--muted);font:9px/1.4 "Courier New",monospace;text-align:right}
+    .archive-note{margin:-5px 0 13px;color:var(--muted);font-size:10px;line-height:1.7}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:13px}
+    .stat{padding:10px 7px;border:1px solid var(--line);background:#E8E7DB;text-align:center}
+    .stat strong{display:block;font:700 17px/1.2 "Courier New",monospace}
+    .stat span{display:block;margin-top:4px;color:var(--muted);font-size:10px}
+    .tier-block{margin-top:12px;border:1.5px solid var(--line);background:var(--card)}
+    .tier-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border-bottom:1px dashed var(--green)}
+    .tier-name{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700}
+    .tier-badge{display:inline-flex;align-items:center;justify-content:center;min-width:38px;padding:4px 6px;border:1px solid var(--ink);font:700 10px/1 "Courier New",monospace;color:var(--ink)}
+    .tier-badge[data-tier="ssr"]{background:var(--ssr)}
+    .tier-badge[data-tier="sr"]{background:var(--sr)}
+    .tier-badge[data-tier="r"]{background:var(--r)}
+    .tier-badge[data-tier="n"]{background:var(--n)}
+    .tier-count{color:var(--muted);font:10px/1.4 "Courier New",monospace}
+    .donor-list{padding:3px 12px}
+    .donor-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px dotted #C8C6B8}
+    .donor-row:last-child{border-bottom:0}
+    .donor-name{min-width:0;overflow-wrap:anywhere;font-size:13px;font-weight:600}
+    .donor-meta{flex:none;color:var(--muted);font:10px/1.5 "Courier New",monospace;text-align:right}
+    .empty-state{
+      padding:23px 14px;border:1.5px dashed var(--line);background:#E8E7DB;
+      text-align:center;color:var(--blue);font-size:12px;line-height:1.9;
+    }
+    .empty-state strong{display:block;margin-bottom:4px;color:var(--ink);font-size:14px}
+    .load-error{color:#8B5142}
+    .footer{margin-top:32px;padding-top:16px;border-top:2px solid var(--green);text-align:center}
+    .footer-author{font-size:13px;font-weight:700}
+    .footer-mark{margin-top:7px;color:var(--blue);font-size:11px;line-height:1.8}
+    .footer-code{margin-top:12px;color:var(--muted);font:9px/1.5 "Courier New",monospace;letter-spacing:.08em}
+    .hidden{display:none!important}
+    @media(max-width:380px){
+      .shell{padding-left:18px;padding-right:18px}
+      h1{font-size:27px}
+      .project-tab{padding:9px 6px}
+      .qr-frame{width:184px}
+      .donor-row{align-items:flex-start}
+    }
+    @media(prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto}
+      *,*::before,*::after{animation:none!important;transition:none!important}
+    }
+  </style>
+</head>
+<body>
+<main class="shell">
+  <header class="topbar">
+    <a class="back-link" id="backLink" href="https://riverovo1.github.io/dogti/">← 返回项目</a>
+    <div class="serial">CREATOR / THANKS ARCHIVE</div>
+  </header>
+
+  <section class="hero">
+    <div class="kicker">INDEPENDENT PROJECTS · ONE CREATOR</div>
+    <h1>谢谢每一份支持。<br>让喜欢的东西，继续生长。</h1>
+    <p class="hero-copy">这里收录 CATI 和 DogTi 的补给信号。<br>两个项目，共用一份感谢；每份支持，分别记录。</p>
+
+    <svg class="pixel-scene" viewBox="0 0 516 176" role="img" aria-label="CATI 小猫与 DogTi 小狗守护补给箱的像素场景">
+      <rect width="516" height="176" fill="#E8E7DB"/>
+      <rect x="0" y="139" width="516" height="37" fill="#D9E2D5"/>
+      <rect x="23" y="28" width="5" height="5" fill="#E8B975"/>
+      <rect x="40" y="18" width="4" height="4" fill="#4E5A6D"/>
+      <rect x="462" y="29" width="5" height="5" fill="#E8B975"/>
+      <rect x="480" y="17" width="4" height="4" fill="#4E5A6D"/>
+      <rect x="250" y="18" width="5" height="5" fill="#89BAAB"/>
+      <rect x="272" y="31" width="4" height="4" fill="#E8B975"/>
+      <rect x="65" y="112" width="24" height="7" fill="#89BAAB"/>
+      <rect x="80" y="105" width="9" height="7" fill="#89BAAB"/>
+      <rect x="424" y="110" width="28" height="8" fill="#89BAAB"/>
+      <rect x="439" y="102" width="12" height="8" fill="#89BAAB"/>
+      <!-- CATI cat sprite -->
+      <g shape-rendering="crispEdges">
+        <rect x="112" y="75" width="46" height="42" fill="#D8D5CC"/>
+        <rect x="117" y="62" width="13" height="17" fill="#D8D5CC"/>
+        <rect x="140" y="62" width="13" height="17" fill="#D8D5CC"/>
+        <rect x="120" y="67" width="6" height="7" fill="#4E5A6D"/>
+        <rect x="143" y="67" width="6" height="7" fill="#4E5A6D"/>
+        <rect x="124" y="87" width="5" height="5" fill="#343943"/>
+        <rect x="143" y="87" width="5" height="5" fill="#343943"/>
+        <rect x="134" y="95" width="6" height="4" fill="#C08A5A"/>
+        <rect x="120" y="116" width="11" height="10" fill="#D8D5CC"/>
+        <rect x="141" y="116" width="11" height="10" fill="#D8D5CC"/>
+        <rect x="105" y="82" width="8" height="20" fill="#D8D5CC"/>
+        <rect x="158" y="78" width="7" height="7" fill="#D8D5CC"/>
+        <rect x="165" y="72" width="7" height="7" fill="#D8D5CC"/>
+      </g>
+      <!-- supply crate -->
+      <g shape-rendering="crispEdges">
+        <rect x="213" y="93" width="90" height="48" fill="#E8B975" stroke="#4E5A6D" stroke-width="3"/>
+        <rect x="213" y="93" width="90" height="10" fill="#89BAAB"/>
+        <rect x="226" y="108" width="64" height="5" fill="#4E5A6D"/>
+        <rect x="226" y="121" width="64" height="5" fill="#4E5A6D"/>
+        <rect x="251" y="103" width="14" height="26" fill="#F2EFDF"/>
+        <rect x="255" y="108" width="6" height="16" fill="#4E5A6D"/>
+      </g>
+      <!-- DogTi dog sprite -->
+      <g shape-rendering="crispEdges">
+        <rect x="352" y="76" width="48" height="42" fill="#C9A77C"/>
+        <rect x="357" y="62" width="15" height="20" fill="#C9A77C"/>
+        <rect x="382" y="62" width="15" height="20" fill="#C9A77C"/>
+        <rect x="354" y="68" width="8" height="17" fill="#4E5A6D"/>
+        <rect x="392" y="68" width="8" height="17" fill="#4E5A6D"/>
+        <rect x="362" y="87" width="5" height="5" fill="#343943"/>
+        <rect x="386" y="87" width="5" height="5" fill="#343943"/>
+        <rect x="372" y="96" width="10" height="6" fill="#4E5A6D"/>
+        <rect x="360" y="117" width="11" height="9" fill="#C9A77C"/>
+        <rect x="383" y="117" width="11" height="9" fill="#C9A77C"/>
+        <rect x="400" y="85" width="8" height="7" fill="#C9A77C"/>
+      </g>
+      <rect x="188" y="45" width="6" height="6" fill="#E8B975"/>
+      <rect x="319" y="43" width="6" height="6" fill="#E8B975"/>
+      <rect x="251" y="56" width="4" height="4" fill="#4E5A6D"/>
+    </svg>
+    <div class="scene-caption"><span>CATI × DOGTI</span><span>SUPPLY SIGNAL RECEIVED ✦</span></div>
+  </section>
+
+  <section class="section" aria-labelledby="projectSelectTitle">
+    <div class="section-head">
+      <div class="section-kicker" id="projectSelectTitle">01 / SELECT A PROJECT</div>
+      <div class="section-kicker">TWO SEPARATE LEDGERS</div>
+    </div>
+    <div class="project-tabs" role="tablist" aria-label="选择支持的项目">
+      <button class="project-tab" type="button" data-project="cati" role="tab" aria-selected="false">
+        <strong>CATI / 小猫</strong><small>CAT ARCHIVE</small>
+      </button>
+      <button class="project-tab" type="button" data-project="dogti" role="tab" aria-selected="true">
+        <strong>DOGTI / 小狗</strong><small>DOG ARCHIVE</small>
+      </button>
+    </div>
+    <div class="project-card">
+      <div class="project-code" id="projectCode">DOGTI / EARTH SIGNALS</div>
+      <h2 id="projectTitle">测测你是什么小狗</h2>
+      <p class="project-desc" id="projectDesc">谢谢你为小狗补充能量。每一份支持都会单独记入 DogTi 的鸣谢档案。</p>
+      <div class="project-scope" id="projectScope">THIS SUPPORT IS RECORDED TO DOGTI ONLY.</div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="supplyTitle">
+    <div class="section-head">
+      <div class="section-kicker" id="supplyTitle">02 / SUPPLY DROP</div>
+      <div class="section-kicker">OFFICIAL SUPPORT</div>
+    </div>
+    <div class="donation-card">
+      <div class="donation-top">
+        <div class="donation-title" id="donationTitle">给小狗补充一点能量</div>
+        <div class="donation-code">WECHAT / QR</div>
+      </div>
+      <div class="qr-frame">
+        <img id="qrImage" src="donate-dogti.png" alt="DogTi 微信赞赏二维码">
+        <div class="qr-fallback" id="qrFallback">二维码暂时无法加载。<br>请稍后再试。</div>
+      </div>
+      <p class="qr-hint">微信赞赏 · 长按识别二维码</p>
+      <p class="donation-note" id="donationNote">扫码前请确认项目。若两个项目共用同一收款账户，账单仍需人工归类；页面选择不会自动给微信交易附加项目标签。</p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="archiveTitle">
+    <div class="section-head">
+      <div class="section-kicker" id="archiveTitle">03 / DONOR ARCHIVE</div>
+      <div class="section-kicker">THANK YOU, ALWAYS</div>
+    </div>
+    <div class="archive-head">
+      <h2>支持者档案</h2>
+      <div class="updated" id="updatedLabel">名单加载中…</div>
+    </div>
+    <p class="archive-note">档位按「单笔最高赞赏金额」划分；累计金额与赞赏次数单独记录。</p>
+    <div class="stats hidden" id="stats" aria-live="polite"></div>
+    <div id="donorList" aria-live="polite">
+      <div class="empty-state"><strong>正在接收补给信号……</strong>请稍等片刻。</div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-author">@夏泉（dy &amp; xhs 同名）</div>
+    <div class="footer-mark">谨防倒卖链接，支持正版，才能持续创作 ψ(｀∇´)ψ</div>
+    <div class="footer-code">CREATOR ARCHIVE / CATI + DOGTI / 2026</div>
+  </footer>
+</main>
+
+<script>
+(function(){
+  "use strict";
+
+  const PROJECTS = {
+    cati:{
+      key:"cati",
+      code:"CATI / CAT ARCHIVE",
+      title:"测测你是什么小猫",
+      desc:"谢谢你为 CATI 添一份猫粮。每一份支持都会单独记入小猫的鸣谢档案。",
+      scope:"CATI ARCHIVE / SEPARATE PUBLIC LEDGER.",
+      donationTitle:"给小猫补充一点猫粮",
+      qr:"https://exoticflicker.github.io/cati/donate.png",
+      qrAlt:"CATI 微信赞赏二维码",
+      data:"cati-sponsors.json",
+      home:"https://exoticflicker.github.io/cati/"
+    },
+    dogti:{
+      key:"dogti",
+      code:"DOGTI / EARTH SIGNALS",
+      title:"测测你是什么小狗",
+      desc:"谢谢你为小狗补充能量。每一份支持都会单独记入 DogTi 的鸣谢档案。",
+      scope:"DOGTI ARCHIVE / SEPARATE PUBLIC LEDGER.",
+      donationTitle:"给小狗补充一点能量",
+      qr:"donate-dogti.png",
+      qrAlt:"DogTi 微信赞赏二维码",
+      data:"dogti-sponsors.json",
+      home:"https://riverovo1.github.io/dogti/"
+    }
+  };
+  const TIER_ORDER=["ssr","sr","r","n"];
+  const TIER_META={
+    ssr:{grade:"SSR",label:"股东",min:100},
+    sr:{grade:"SR",label:"大股东",min:50},
+    r:{grade:"R",label:"支持者",min:10},
+    n:{grade:"N",label:"小可爱",min:0}
+  };
+
+  const params=new URLSearchParams(location.search);
+  const origin=params.get("from");
+  let current=params.get("project")==="cati"?"cati":"dogti";
+
+  const $=id=>document.getElementById(id);
+  const fmt=value=>{
+    const n=Number(value);
+    if(!Number.isFinite(n)) return "0";
+    return Number.isInteger(n)?String(n):n.toFixed(2).replace(/0+$/,"").replace(/\.$/,"");
+  };
+  const escapeHTML=value=>String(value??"").replace(/[&<>"']/g,ch=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  })[ch]);
+
+  function setBackLink(){
+    const backProject=origin==="cati"?"cati":origin==="dogti"?"dogti":current;
+    const p=PROJECTS[backProject];
+    $("backLink").href=p.home;
+    $("backLink").textContent="← 返回 "+(backProject==="cati"?"CATI":"DogTi");
+  }
+
+  function renderStats(list){
+    const stats=$("stats");
+    if(!Array.isArray(list)||!list.length){stats.classList.add("hidden");stats.innerHTML="";return;}
+    const total=list.reduce((sum,item)=>sum+(Number(item.total)||0),0);
+    const donations=list.reduce((sum,item)=>sum+(Number(item.count)||0),0);
+    stats.innerHTML=
+      '<div class="stat"><strong>'+list.length+'</strong><span>支持者</span></div>'+
+      '<div class="stat"><strong>'+donations+'</strong><span>赞赏笔数</span></div>'+
+      '<div class="stat"><strong>¥'+fmt(total)+'</strong><span>累计支持</span></div>';
+    stats.classList.remove("hidden");
+  }
+
+  function renderSponsors(data){
+    const root=$("donorList");
+    const list=Array.isArray(data.list)?data.list:[];
+    $("updatedLabel").textContent=data.updated?"UPDATED / "+data.updated:"";
+    if(data.placeholder===true){
+      $("stats").classList.add("hidden");
+      root.innerHTML='<div class="empty-state"><strong>真实鸣谢名单正在整理中。</strong>感谢每一份支持，等名单核对完成后，小猫和小狗都会在这里向你道谢。</div>';
+      return;
+    }
+    if(!list.length){
+      $("stats").classList.add("hidden");
+      root.innerHTML='<div class="empty-state"><strong>第一份补给信号正在路上。</strong>感谢你来到这里。</div>';
+      return;
+    }
+    renderStats(list);
+    let html="";
+    for(const key of TIER_ORDER){
+      const meta=TIER_META[key];
+      const members=list.filter(item=>item.tier===key);
+      if(!members.length) continue;
+      html+='<section class="tier-block" aria-label="'+meta.grade+' '+meta.label+'">';
+      html+='<div class="tier-head"><div class="tier-name"><span class="tier-badge" data-tier="'+key+'">'+meta.grade+'</span><span>'+meta.label+'</span></div>';
+      const threshold=key==="ssr"?"单笔 ¥100+":key==="sr"?"单笔 ¥50–99.99":key==="r"?"单笔 ¥10–49.99":"单笔低于 ¥10";
+      html+='<span class="tier-count">'+threshold+' · '+members.length+' PERSON'+(members.length===1?"":"S")+'</span></div><div class="donor-list">';
+      members.forEach(item=>{
+        const name=escapeHTML(item.name||"匿名支持者");
+        const count=Math.max(0,Number(item.count)||0);
+        const total=Number(item.total)||0;
+        const metaText=(count?("累计 ¥"+fmt(total)+" · "+count+" 次"):"感谢支持");
+        html+='<div class="donor-row"><span class="donor-name">'+name+'</span><span class="donor-meta">'+escapeHTML(metaText)+'</span></div>';
+      });
+      html+="</div></section>";
+    }
+    root.innerHTML=html||'<div class="empty-state"><strong>名单正在整理中。</strong>感谢每一份支持。</div>';
+  }
+
+  async function loadSponsors(project){
+    const root=$("donorList");
+    $("updatedLabel").textContent="LOADING…";
+    $("stats").classList.add("hidden");
+    root.innerHTML='<div class="empty-state"><strong>正在整理补给档案……</strong>请稍等片刻。</div>';
+    try{
+      const response=await fetch(PROJECTS[project].data,{cache:"no-store"});
+      if(!response.ok) throw new Error("HTTP "+response.status);
+      const data=await response.json();
+      renderSponsors(data);
+    }catch(error){
+      $("updatedLabel").textContent="DATA UNAVAILABLE";
+      root.innerHTML='<div class="empty-state load-error"><strong>名单暂时无法加载。</strong>二维码仍可正常使用；请稍后再查看鸣谢档案。</div>';
+    }
+  }
+
+  function setProject(project,updateUrl){
+    if(!PROJECTS[project]) project="dogti";
+    current=project;
+    const data=PROJECTS[project];
+    document.querySelectorAll(".project-tab").forEach(button=>{
+      const active=button.dataset.project===project;
+      button.setAttribute("aria-selected",active?"true":"false");
+    });
+    $("projectCode").textContent=data.code;
+    $("projectTitle").textContent=data.title;
+    $("projectDesc").textContent=data.desc;
+    $("projectScope").textContent=data.scope;
+    $("donationTitle").textContent=data.donationTitle;
+    $("qrImage").alt=data.qrAlt;
+    $("qrImage").src=data.qr;
+    $("qrImage").style.display="block";
+    $("qrFallback").style.display="none";
+    setBackLink();
+    if(updateUrl){
+      const next=new URL(location.href);
+      next.searchParams.set("project",project);
+      history.replaceState(null,"",next);
+    }
+    loadSponsors(project);
+  }
+
+  $("qrImage").addEventListener("error",()=>{
+    $("qrImage").style.display="none";
+    $("qrFallback").style.display="flex";
+  });
+  document.querySelectorAll(".project-tab").forEach(button=>{
+    button.addEventListener("click",()=>setProject(button.dataset.project,true));
+  });
+
+  setProject(current,false);
+})();
+</script>
+</body>
+</html>
