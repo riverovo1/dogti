@@ -890,7 +890,7 @@ button:focus-visible{outline-color:var(--blue)}
       </div>
       <div class="board-feed-head"><b>收到的信号</b><button type="button" id="boardRefresh" class="board-quiet">↻ 刷新</button></div>
       <div id="boardFeed" class="board-feed" aria-live="polite"></div>
-      <p class="board-footnote">请勿公开个人隐私或联系方式。正式留言会经过审核，再展示给所有访客。</p>
+      <p class="board-footnote">请勿公开个人隐私或联系方式。正式留言会自动审核，违规内容不会展示给访客。</p>
     </section>
 
     <section class="screen" id="vote">
@@ -976,10 +976,12 @@ function mountDog(id,emoji){const el=document.getElementById(id);if(el){el.inner
 let idx=0, picked=null, answers={}, resultText="", chartValues=Array(8).fill(0), submitting=false;
 // Only PUBLIC API URL goes here. Never put worker secrets or scoring mappings in HTML.
 window.DOGTI_QUIZ_CONFIG = window.DOGTI_QUIZ_CONFIG || {apiBase: 'https://dogti-quiz.cati-counter.workers.dev'};
-let quizToken='', quizTokenPromise=null;
+let quizToken='', quizTokenPromise=null, quizTokenAt=0;
 async function ensureQuizToken(){
-  if(quizToken)return quizToken;
+  // 缓存令牌签发超过 5 分钟即作废重发，避免慢答用户提交时令牌已过期。
+  if(quizToken && Date.now()-quizTokenAt < 5*60*1000)return quizToken;
   if(quizTokenPromise)return quizTokenPromise;
+  quizToken='';
   quizTokenPromise=(async()=>{
     const cfg=window.DOGTI_QUIZ_CONFIG||{};
     const base=String(cfg.apiBase||'').replace(/\/$/,'');
@@ -987,7 +989,7 @@ async function ensureQuizToken(){
     try{
       const r=await fetch(base+'/api/quiz/token',{method:'POST',headers:{'Content-Type':'application/json'}});
       const d=await r.json().catch(()=>({}));
-      if(r.ok&&typeof d.token==='string')quizToken=d.token;
+      if(r.ok&&typeof d.token==='string'){quizToken=d.token;quizTokenAt=Date.now();}
     }catch{}
     quizTokenPromise=null;
     return quizToken;
@@ -1237,9 +1239,9 @@ function share(){
   copyToClipboard(text);
 }
 
-$("#startBtn").onclick=function(){idx=0;answers={};chartValues=Array(8).fill(0);picked=null;quizToken='';quizTokenPromise=null;ensureQuizToken();renderQ();show("quiz")};
+$("#startBtn").onclick=function(){idx=0;answers={};chartValues=Array(8).fill(0);picked=null;quizToken='';quizTokenPromise=null;quizTokenAt=0;ensureQuizToken();renderQ();show("quiz")};
 $("#prevBtn").onclick=function(){if(idx===0)return;const previousIndex=idx-1;delete answers[previousIndex];idx--;renderQ()};
-$("#againBtn").onclick=function(){idx=0;answers={};chartValues=Array(8).fill(0);picked=null;quizToken='';quizTokenPromise=null;ensureQuizToken();renderQ();show("quiz")};
+$("#againBtn").onclick=function(){idx=0;answers={};chartValues=Array(8).fill(0);picked=null;quizToken='';quizTokenPromise=null;quizTokenAt=0;ensureQuizToken();renderQ();show("quiz")};
 $("#galleryBtn").querySelector(".gallery-mini-icons").innerHTML=breedIcon("beagle")+breedIcon("pomeranian")+breedIcon("doberman");
   $("#galleryBtn").onclick=function(){renderGallery();show("gallery")};
 $("#galleryBack").onclick=function(){show("result")};
@@ -1252,9 +1254,21 @@ renderCoverSignal();
 
 
 try{
-  fetch("count.json").then(function(r){return r.json()}).then(function(j){
-    $("#coverCount").textContent="已测试人数："+(j.count||"—");
-  }).catch(function(){});
+  const cfg=window.DOGTI_QUIZ_CONFIG||{};
+  const base=String(cfg.apiBase||'').replace(/\/$/,'');
+  if(base&&base!=='WORKER_URL_TO_SET'){
+    fetch(base+"/api/stats").then(function(r){
+      if(!r.ok)throw new Error();
+      return r.json();
+    }).then(function(j){
+      if(!Number.isFinite(j.completed))throw new Error();
+      $("#coverCount").textContent="已测试人数："+j.completed;
+    }).catch(function(){
+      $("#coverCount").textContent="已测试人数：统计暂不可用";
+    });
+  }else{
+    $("#coverCount").textContent="已测试人数：统计暂不可用";
+  }
 }catch(e){}
 </script>
 <template id="dogtiSceneTemplate"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" class="dogti-v5" role="img" aria-label="02:17，外星飞船尝试捕获比格犬；小狗挣脱后向左奔跑，并从右边返回原地，捕获失败" shape-rendering="crispEdges">
@@ -1357,6 +1371,24 @@ window.DOGTI_BOARD_CONFIG = window.DOGTI_BOARD_CONFIG || {apiBase:(window.DOGTI_
         try{like.disabled=true;await ensureSession();const data=await api('/api/messages/'+m.id+'/like',method,{});m.likes=data.likes;m.liked=data.liked;render()}catch(e){status(e.message);like.disabled=false}
       };
       const reply=actions.appendChild(el('button'));reply.type='button';text(reply,'↳ 回复');reply.onclick=()=>setReply(m);
+      const report=actions.appendChild(el('button'));report.type='button';text(report,'⚠ 举报');
+      report.onclick=async()=>{
+        if(!live){status('演示模式不支持举报');return}
+        const code=prompt('请选择举报原因（输入序号）：\n1 广告 spam\n2 骚扰 harassment\n3 隐私泄露 privacy\n4 其他 other');
+        if(code==null)return;
+        const reasonMap={'1':'ad','2':'harassment','3':'privacy','4':'other'};
+        const reason=reasonMap[String(code).trim()];
+        if(!reason){status('已取消举报');return}
+        const detail=(prompt('补充说明（可选，直接确定可跳过）：')||'').slice(0,300);
+        try{
+          report.disabled=true;
+          await ensureSession();
+          const captcha=await turnstileToken();
+          const data=await api('/api/messages/'+m.id+'/report','POST',{reason,detail,turnstileToken:captcha});
+          window.turnstile?.reset();
+          status(data.message||'已收到举报，感谢反馈');
+        }catch(e){status(e.message)}finally{report.disabled=false}
+      };
       if(m.replies?.length){const wrap=card.appendChild(el('div','board-replies'));for(const r of m.replies){const box=wrap.appendChild(el('div','board-reply'));const h=box.appendChild(el('div','board-entry-head'));text(h.appendChild(el('b')),r.nickname);text(h.appendChild(el('time','board-entry-time')),date(r.created_at));text(box.appendChild(el('p')),r.content)}}
     }
   }
@@ -1383,7 +1415,7 @@ window.DOGTI_BOARD_CONFIG = window.DOGTI_BOARD_CONFIG || {apiBase:(window.DOGTI_
     if(body.length<2||body.length>300){status('请输入2–300字的留言');return}
     busy=true;q('boardSend').disabled=true;status('正在发送…');
     try{
-      if(live){await ensureSession();const captcha=await turnstileToken();const result=await api('/api/messages','POST',{nickname:name,content:body,breed:q('boardBreed').value,parentId:replyTo?.id||null,turnstileToken:captcha});status(result.message||'已提交审核');window.turnstile?.reset();}
+      if(live){await ensureSession();const captcha=await turnstileToken();const result=await api('/api/messages','POST',{nickname:name,content:body,breed:q('boardBreed').value,parentId:replyTo?.id||null,turnstileToken:captcha});status(result.message||'留言成功，已展示');window.turnstile?.reset();}
       else{
         const r={id:'demo-'+Date.now(),nickname:name,breed:q('boardBreed').value,content:body,created_at:'演示',likes:0,liked:false,replies:[]};
         if(replyTo){r.parent_id=replyTo.id;replyTo.replies=replyTo.replies||[];replyTo.replies.push(r)}else messages.unshift(r);
@@ -1400,7 +1432,7 @@ window.DOGTI_BOARD_CONFIG = window.DOGTI_BOARD_CONFIG || {apiBase:(window.DOGTI_
     document.head.appendChild(script);
   }
   window.dogtiBoardOpen=function(){
-    text(q('boardMode'),live?'公开留言板 · 发布后等待审核':'本地互动预览 · 示例留言不会同步到其他访客');
+    text(q('boardMode'),live?'公开留言板 · 自动审核，违规内容不会展示':'本地互动预览 · 示例留言不会同步到其他访客');
     setupTurnstile();load();
   };
   q('boardBack').onclick=()=>show('result');
