@@ -6,7 +6,7 @@
 
 **中文**
 
-© 2026 DogTi · 作者 @夏泉ovo，保留所有权利。
+© 2026 DogTi · 作者 @夏泉，保留所有权利。
 
 本作品的题目、文案、犬种图鉴、视觉与动效设计均为原创，受著作权保护。
 
@@ -14,7 +14,7 @@
 
 **English**
 
-© 2026 DogTi by @夏泉ovo. All rights reserved.
+© 2026 DogTi by @夏泉. All rights reserved.
 
 The quiz, copy, breed gallery, visuals and animations are original, copyrighted works.
 
